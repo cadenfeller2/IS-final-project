@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Utah Ski Dodge Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../styles/game.css">
+</head>
+
+<body>
+
+<h1>🎿 Utah Ski Dodge</h1>
+<div id="timer">Points: 0</div>
+
+<div id="game">
+    <div id="skier"></div>
+</div>
+
+<div id="instructions">
+    Use ⬅️ and ➡️ arrow keys to dodge trees.<br>
+    Survive as long as you can!
+</div>
+
+<button onclick="startGame()">Start / Restart</button>
+
+<script>
+    const game = document.getElementById("game");
+    const skier = document.getElementById("skier");
+    const timerDisplay = document.getElementById("timer");
+
+    let skierX = 180;
+    let trees = [];
+    let gameInterval;
+    let treeInterval;
+    let score = 0;
+    let running = false;
+
+    document.addEventListener("keydown", moveSkier);
+
+    function moveSkier(e) {
+        if (!running) return;
+
+        if (e.key === "ArrowLeft" && skierX > 0) {
+            skierX -= 20;
+        } else if (e.key === "ArrowRight" && skierX < 360) {
+            skierX += 20;
+        }
+
+        skier.style.left = skierX + "px";
+    }
+
+    function createTree() {
+        const tree = document.createElement("div");
+        tree.classList.add("tree");
+        tree.style.left = Math.random() * 360 + "px";
+        game.appendChild(tree);
+        trees.push(tree);
+    }
+
+    function moveTrees() {
+        trees.forEach((tree, index) => {
+            const top = tree.offsetTop + 5;
+            tree.style.top = top + "px";
+
+            // Collision detection
+            if (
+                top > 520 &&
+                Math.abs(tree.offsetLeft - skierX) < 35
+            ) {
+                endGame();
+            }
+
+            if (top > 600) {
+                game.removeChild(tree);
+                trees.splice(index, 1);
+            }
+        });
+    }
+
+    function startGame() {
+        endGame();
+        running = true;
+        score = 0;
+        timerDisplay.textContent = "Points: 0";
+
+        skierX = 180;
+        skier.style.left = skierX + "px";
+
+        gameInterval = setInterval(() => {
+            score++;
+            timerDisplay.textContent = "Points: " + score;
+            moveTrees();
+        }, 1000 / 60);
+
+        treeInterval = setInterval(createTree, 900);
+    }
+
+    function endGame() {
+        running = false;
+        clearInterval(gameInterval);
+        clearInterval(treeInterval);
+
+        trees.forEach(tree => game.removeChild(tree));
+        trees = [];
+
+        if (score > 0) {
+            alert("❄️ You crashed! Final score: " + score);
+        }
+    }
+</script>
+
+</body>
+</html>

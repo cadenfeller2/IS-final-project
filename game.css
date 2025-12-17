@@ -1,0 +1,83 @@
+  body {
+        background: linear-gradient(#1e293b, #0f172a);
+        font-family: Arial, sans-serif;
+        color: white;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        margin: 20px 0 5px;
+    }
+
+    #timer {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    #game {
+        position: relative;
+        width: 400px;
+        height: 600px;
+        background: linear-gradient(#e5e7eb, #cbd5e1);
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    /* Skier */
+    #skier {
+        position: absolute;
+        bottom: 20px;
+        left: 180px;
+        width: 40px;
+        height: 40px;
+        background: #dc2626;
+        border-radius: 50%;
+    }
+
+    /* Tree (triangle) */
+    .tree {
+        position: absolute;
+        top: -50px;
+        width: 0;
+        height: 0;
+        border-left: 18px solid transparent;
+        border-right: 18px solid transparent;
+        border-bottom: 45px solid #166534;
+    }
+
+    .tree::after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: -10px;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 20px solid #f8fafc;
+    }
+
+    #instructions {
+        margin: 15px;
+        font-size: 0.9rem;
+        color: #e5e7eb;
+    }
+
+    button {
+        padding: 10px 20px;
+        background: #2563eb;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
